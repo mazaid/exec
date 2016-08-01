@@ -15,8 +15,8 @@ describe('command', function () {
             checkTaskId: uuid(),
             type: 'exec',
             data: {
-                command: 'ping',
-                args: ['-c 1', 'localhost']
+                command: 'echo',
+                args: ['test']
             }
         };
 
@@ -49,8 +49,8 @@ describe('command', function () {
             checkTaskId: uuid(),
             type: 'exec',
             data: {
-                command: 'pingggg',
-                args: ['-c 1', 'localhost']
+                command: 'echooo',
+                args: ['test']
             }
         };
 
@@ -66,14 +66,14 @@ describe('command', function () {
                 assert.isNotNull(result.error);
                 assert.equal(
                     result.error.message,
-                    'Command failed: /bin/sh -c pingggg -c 1 localhost\n/bin/sh: pingggg: command not found\n'
+                    'Command failed: /bin/sh -c echooo test\n/bin/sh: echooo: command not found\n'
                 );
                 assert.equal(result.code, 127);
                 assert.isString(result.stdout);
                 assert.isString(result.stderr);
                 assert(result.stdout.length === 0);
                 assert(result.stderr.length > 0);
-                assert.equal(result.stderr, '/bin/sh: pingggg: command not found\n');
+                assert.equal(result.stderr, '/bin/sh: echooo: command not found\n');
 
                 done();
             })
