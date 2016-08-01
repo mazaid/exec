@@ -1,13 +1,20 @@
 var ExecTask = require('mazaid-exec-task');
-var error = require('mazaid-error');
+
+var ErrorCodes = {
+    INVALID_TASK: 'invalidTask'
+};
+
+var error = require('mazaid-error/create')(ErrorCodes);
 
 var execCommand = require('./types/command');
+
+
 
 module.exports = (task) => {
 
     return new Promise((resolve, reject) => {
-        if (!task instanceof ExecTask) {
-            return reject(error('task not instanceof ExecTask'));
+        if (task instanceof ExecTask === false) {
+            return reject(error('task not instanceof ExecTask', ErrorCodes.INVALID_TASK));
         }
 
         if (task.type == 'exec') {
@@ -21,7 +28,9 @@ module.exports = (task) => {
                 });
 
         } else {
-            return reject(error('unknown ExecTask type = ' + task.type));
+            return reject(
+                error('unknown ExecTask type = ' + task.type, ErrorCodes.INVALID_TASK)
+            );
         }
     });
 

@@ -64,10 +64,6 @@ describe('command', function () {
                 var result = task.result;
 
                 assert.isNotNull(result.error);
-                assert.equal(
-                    result.error.message,
-                    'Command failed: /bin/sh -c echooo test\n/bin/sh: echooo: command not found\n'
-                );
                 assert.equal(result.code, 127);
                 assert.isString(result.stdout);
                 assert.isString(result.stderr);
@@ -79,6 +75,32 @@ describe('command', function () {
             })
             .catch((error) => {
                 done(error);
+            });
+    });
+
+    it('should error on non ExecTask object', function (done) {
+        exec({})
+            .then(() => {
+                done(new Error('not here'));
+            })
+            .catch((error) => {
+                assert(error.checkable);
+                assert.equal(error.message, 'task not instanceof ExecTask');
+                assert.equal(error.code, 'invalidTask');
+                done();
+            });
+    });
+
+    it('should error on unknown ExecTask type', function (done) {
+        exec(new ExecTask({type: 'abcdef'}))
+            .then(() => {
+                done(new Error('not here'));
+            })
+            .catch((error) => {
+                assert(error.checkable);
+                assert.equal(error.message, 'unknown ExecTask type = abcdef');
+                assert.equal(error.code, error.ErrorCodes.INVALID_TASK);
+                done();
             });
     });
 
