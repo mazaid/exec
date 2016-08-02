@@ -8,8 +8,6 @@ var error = require('mazaid-error/create')(ErrorCodes);
 
 var execCommand = require('./types/command');
 
-
-
 module.exports = (task) => {
 
     return new Promise((resolve, reject) => {

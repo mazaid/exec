@@ -10,6 +10,9 @@ var dataSchema = {
 module.exports = (task) => {
 
     return new Promise((resolve, reject) => {
+
+        task.started();
+
         var data = task.data;
 
         var joiOptions = {
@@ -38,6 +41,8 @@ module.exports = (task) => {
             };
 
             exec(cmd, (error, stdout, stderr) => {
+
+                task.finished();
 
                 result.stdout = stdout;
                 result.stderr = stderr;
