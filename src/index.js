@@ -15,7 +15,7 @@ module.exports = (task) => {
             return reject(error('task not instanceof ExecTask', ErrorCodes.INVALID_TASK));
         }
 
-        if (task.type == 'exec') {
+        if (task.type === 'exec') {
 
             execCommand(task)
                 .then((task) => {
