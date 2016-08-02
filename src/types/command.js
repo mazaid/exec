@@ -7,6 +7,12 @@ var dataSchema = {
     args: joi.array().items(joi.string())
 };
 
+var ErrorCodes = {
+    INVALID_DATA: 'invalidData'
+};
+
+var mazaiError = require('mazaid-error/create')(ErrorCodes);
+
 module.exports = (task) => {
 
     return new Promise((resolve, reject) => {
@@ -21,10 +27,19 @@ module.exports = (task) => {
             allowUnknown: false
         };
 
-        joi.validate(task.data, dataSchema, joiOptions, function (err, valid) {
-            if (err) {
-                // TODO mazaid-error
-                return reject(err);
+        joi.validate(task.data, dataSchema, joiOptions, function (error, valid) {
+            if (error) {
+                if (error.name === 'ValidationError') {
+                    return reject(
+                        mazaiError(
+                            'invalid data',
+                            ErrorCodes.INVALID_DATA
+                        )
+                        .setList(error.details)
+                    );
+                } else {
+                    return reject(error);
+                }
             }
 
             var cmd = valid.command;

@@ -104,4 +104,16 @@ describe('command', function () {
             });
     });
 
+    it('should error on invalid ExecTask Command data', function (done) {
+        exec(new ExecTask({type: 'exec', data: {shit: 'false'}}))
+            .then(() => {
+                done(new Error('not here'));
+            })
+            .catch((error) => {
+                assert.equal(error.code, error.ErrorCodes.INVALID_DATA);
+                assert.equal(error.message, 'invalid data');
+                done();
+            });
+    });
+
 });
