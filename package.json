@@ -33,8 +33,8 @@
   "homepage": "https://github.com/mazaid/exec#readme",
   "dependencies": {
     "joi": "^9.0.4",
-    "mazaid-error": "^0.2.1",
-    "mazaid-exec-task": "^0.1.2",
+    "mazaid-error": "^0.3.1",
+    "mazaid-exec-task": "^0.1.7",
     "superagent": "^2.1.0"
   },
   "devDependencies": {
