@@ -63,7 +63,7 @@ module.exports = (task) => {
                 result.stderr = stderr;
 
                 if (error) {
-                    result.error = error;
+                    result.error = error.message;
                     result.code = error.code;
                 }
 
