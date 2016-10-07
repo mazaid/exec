@@ -7,6 +7,7 @@ var ErrorCodes = {
 var error = require('mazaid-error/create')(ErrorCodes);
 
 var execCommand = require('./types/command');
+var httpCommand = require('./types/http');
 
 module.exports = (task) => {
 
@@ -22,6 +23,15 @@ module.exports = (task) => {
                     resolve(task);
                 })
                 .catch((error) => {
+                    reject(error);
+                });
+
+        } else if (task.type === 'http') {
+            httpCommand(task)
+                .then((task) => {
+                    resolve(task);
+                })
+                .catch(function (error) {
                     reject(error);
                 });
 

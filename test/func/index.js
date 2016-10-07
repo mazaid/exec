@@ -1,1 +1,2 @@
 require('./command');
+require('./http');

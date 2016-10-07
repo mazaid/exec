@@ -10,7 +10,7 @@
   "scripts": {
     "docs": "rm -rf ./docs && ./node_modules/.bin/jsdoc ./ -c ./.jsdoc.json --verbose && open ./docs/index.html",
     "tests": "./node_modules/.bin/mocha ./test/unit/",
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/unit/"
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/func/"
   },
   "engines": {
     "node": ">=4"
@@ -35,7 +35,7 @@
     "joi": "^9.0.4",
     "mazaid-error": "^0.3.1",
     "mazaid-exec-task": "^0.1.7",
-    "superagent": "^2.1.0"
+    "superagent": "^2.3.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
