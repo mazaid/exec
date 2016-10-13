@@ -16,7 +16,7 @@ describe('http', function () {
             type: 'http',
             data: {
                 method: 'GET',
-                url: 'https://api.github.com/repos/octocat/Hello-World/commits?author=octocat&since=2012-03-06T23:06:50Z&limit=1'
+                url: 'https://api.github.com/'
             }
         };
 
@@ -31,7 +31,7 @@ describe('http', function () {
 
                 assert.isNull(result.error);
                 assert.equal(result.code, 200);
-                assert.isArray(result.body);
+                assert.isObject(result.body);
                 assert.isFalse(result.rawBody);
                 done();
             })
