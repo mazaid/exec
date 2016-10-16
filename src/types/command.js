@@ -13,13 +13,15 @@ var ErrorCodes = {
 
 var mazaiError = require('mazaid-error/create')(ErrorCodes);
 
-module.exports = (task) => {
+module.exports = (logger, task) => {
 
     return new Promise((resolve, reject) => {
 
         task.started();
 
         var data = task.data;
+
+        logger.trace('task started', data);
 
         var joiOptions = {
             convert: true,
@@ -29,6 +31,9 @@ module.exports = (task) => {
 
         joi.validate(task.data, dataSchema, joiOptions, function (error, valid) {
             if (error) {
+
+                logger.trace(error);
+
                 if (error.name === 'ValidationError') {
                     return reject(
                         mazaiError(
@@ -41,6 +46,8 @@ module.exports = (task) => {
                     return reject(error);
                 }
             }
+
+            logger.trace('valid data', valid);
 
             var cmd = valid.command;
 
@@ -55,9 +62,27 @@ module.exports = (task) => {
                 stderr: null
             };
 
+            logger.trace('cmd', cmd);
+
+            var timeouted = false;
+
+            var timeout = setTimeout(() => {
+                timeouted = true;
+
+                reject(mazaiError(`[mazai-exec] timeout exceed ${task.timeout}s`));
+            }, task.timeout * 1000);
+
             exec(cmd, (error, stdout, stderr) => {
 
+                if (timeouted) {
+                    return;
+                }
+
+                clearTimeout(timeout);
+
                 task.finished();
+
+                logger.trace('task finished', error, stdout, stderr);
 
                 result.stdout = stdout;
                 result.stderr = stderr;

@@ -34,7 +34,7 @@
   "dependencies": {
     "joi": "^9.0.4",
     "mazaid-error": "^0.3.1",
-    "mazaid-exec-task": "^0.1.7",
+    "mazaid-exec-task": "^0.1.8",
     "superagent": "^2.3.0"
   },
   "devDependencies": {
@@ -44,6 +44,7 @@
     "ink-docstrap": "^1.2.1",
     "istanbul": "^0.4.4",
     "jsdoc": "^3.4.0",
+    "log4js": "^0.6.38",
     "minami": "^1.1.1",
     "mocha": "^2.4.5",
     "uuid": "^2.0.2"

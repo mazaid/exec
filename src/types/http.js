@@ -18,13 +18,17 @@ var ErrorCodes = {
 
 var mazaiError = require('mazaid-error/create')(ErrorCodes);
 
-module.exports = (task) => {
+module.exports = (logger, task) => {
 
     return new Promise((resolve, reject) => {
 
         task.started();
 
+        logger.trace('task started');
+
         var rawData = task.data;
+
+        logger.trace(rawData);
 
         var joiOptions = {
             convert: true,
@@ -34,6 +38,9 @@ module.exports = (task) => {
 
         joi.validate(rawData, dataSchema, joiOptions, function (error, data) {
             if (error) {
+
+                logger.debug(error);
+
                 if (error.name === 'ValidationError') {
                     return reject(
                         mazaiError(
@@ -46,6 +53,9 @@ module.exports = (task) => {
                     return reject(error);
                 }
             }
+
+            logger.trace('valid data');
+            logger.trace(data);
 
             var result = {
                 error: null,
@@ -63,6 +73,8 @@ module.exports = (task) => {
                     request.get(data.url)
                         .timeout(data.timeout * 1000)
                         .end(function (error, res) {
+
+                            logger.trace('task finished', error, res.body);
 
                             task.finished();
 

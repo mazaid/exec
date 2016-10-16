@@ -4,6 +4,9 @@ var uuid = require('uuid').v4;
 
 var ExecTask = require('mazaid-exec-task');
 
+var logger = require('log4js').getLogger();
+logger.setLevel('FATAL');
+
 var exec = require(__dirname + '/../../../index');
 
 describe('command', function () {
@@ -24,7 +27,7 @@ describe('command', function () {
 
         task.validate()
             .then(() => {
-                return exec(task);
+                return exec(logger, task);
             })
             .then((task) => {
                 var result = task.result;
@@ -58,7 +61,7 @@ describe('command', function () {
 
         task.validate()
             .then(() => {
-                return exec(task);
+                return exec(logger, task);
             })
             .then((task) => {
                 var result = task.result;
@@ -79,7 +82,7 @@ describe('command', function () {
     });
 
     it('should error on non ExecTask object', function (done) {
-        exec({})
+        exec(logger, {})
             .then(() => {
                 done(new Error('not here'));
             })
@@ -92,7 +95,7 @@ describe('command', function () {
     });
 
     it('should error on unknown ExecTask type', function (done) {
-        exec(new ExecTask({type: 'abcdef'}))
+        exec(logger, new ExecTask({type: 'abcdef'}))
             .then(() => {
                 done(new Error('not here'));
             })
@@ -105,7 +108,7 @@ describe('command', function () {
     });
 
     it('should error on invalid ExecTask Command data', function (done) {
-        exec(new ExecTask({type: 'exec', data: {shit: 'false'}}))
+        exec(logger, new ExecTask({type: 'exec', data: {shit: 'false'}}))
             .then(() => {
                 done(new Error('not here'));
             })

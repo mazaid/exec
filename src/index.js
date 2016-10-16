@@ -9,16 +9,17 @@ var error = require('mazaid-error/create')(ErrorCodes);
 var execCommand = require('./types/command');
 var httpCommand = require('./types/http');
 
-module.exports = (task) => {
+module.exports = (logger, task) => {
 
     return new Promise((resolve, reject) => {
-        if (task instanceof ExecTask === false) {
+
+        if (task.constructor.name !== 'ExecTask') {
             return reject(error('task not instanceof ExecTask', ErrorCodes.INVALID_TASK));
         }
 
         if (task.type === 'exec') {
 
-            execCommand(task)
+            execCommand(logger, task)
                 .then((task) => {
                     resolve(task);
                 })
@@ -27,7 +28,7 @@ module.exports = (task) => {
                 });
 
         } else if (task.type === 'http') {
-            httpCommand(task)
+            httpCommand(logger, task)
                 .then((task) => {
                     resolve(task);
                 })
