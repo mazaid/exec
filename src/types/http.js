@@ -74,7 +74,7 @@ module.exports = (logger, task) => {
                         .timeout(data.timeout * 1000)
                         .end(function (error, res) {
 
-                            logger.trace('task finished', error, res.body);
+                            logger.trace('task finished', error, (res) ? res.body : null);
 
                             task.finished();
 
