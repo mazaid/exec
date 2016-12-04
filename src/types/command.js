@@ -21,7 +21,7 @@ module.exports = (logger, task) => {
 
         var data = task.data;
 
-        logger.trace('task started', data);
+        logger.debug('task started', data);
 
         var joiOptions = {
             convert: true,
@@ -62,7 +62,7 @@ module.exports = (logger, task) => {
                 stderr: null
             };
 
-            logger.trace('cmd', cmd);
+            logger.debug('cmd', cmd);
 
             var timeouted = false;
 
@@ -72,7 +72,7 @@ module.exports = (logger, task) => {
                 reject(mazaiError(`[mazai-exec] timeout exceed ${task.timeout}s`));
             }, task.timeout * 1000);
 
-            exec(cmd, (error, stdout, stderr) => {
+            exec(cmd, {maxBuffer: 5 * 1024 * 1024}, (error, stdout, stderr) => {
 
                 if (timeouted) {
                     return;
@@ -81,6 +81,8 @@ module.exports = (logger, task) => {
                 clearTimeout(timeout);
 
                 task.finished();
+
+                logger.debug('task finished');
 
                 logger.trace('task finished', error, stdout, stderr);
 

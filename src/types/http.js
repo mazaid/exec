@@ -106,7 +106,7 @@ module.exports = (logger, task) => {
 
                 default:
                     reject(
-                        mazaidError(
+                        mazaiError(
                             'unknown http method ' + data.method,
                             ErrorCodes.INVALID_DATA
                         )

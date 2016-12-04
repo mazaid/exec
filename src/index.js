@@ -13,7 +13,7 @@ module.exports = (logger, task) => {
 
     return new Promise((resolve, reject) => {
 
-        if (task.constructor.name !== 'ExecTask') {
+        if (task instanceof ExecTask === false) {
             return reject(error('task not instanceof ExecTask', ErrorCodes.INVALID_TASK));
         }
 
