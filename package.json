@@ -36,7 +36,7 @@
   "dependencies": {
     "joi": "^9.2.0",
     "mazaid-error": "0.3.1",
-    "mazaid-exec-task": "^0.1.9",
+    "mazaid-exec-task": "^0.2.0",
     "superagent": "2.3.0"
   },
   "devDependencies": {

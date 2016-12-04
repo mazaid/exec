@@ -13,7 +13,9 @@ module.exports = (logger, task) => {
 
     return new Promise((resolve, reject) => {
 
-        if (task instanceof ExecTask === false) {
+        logger.debug('task = ', task);
+
+        if (!task || !task.entityName || task.entityName !== 'execTask') {
             return reject(error('task not instanceof ExecTask', ErrorCodes.INVALID_TASK));
         }
 
