@@ -4,7 +4,8 @@ var joi = require('joi');
 
 var dataSchema = {
     command: joi.string().required(),
-    args: joi.array().items(joi.string())
+    args: joi.array().items(joi.string()),
+    timeout: joi.number().min(1).required()
 };
 
 var ErrorCodes = {
@@ -21,7 +22,9 @@ module.exports = (logger, task) => {
 
         var data = task.data;
 
-        logger.debug('task started', data);
+        data.timeout = task.timeout;
+
+        logger.trace('mazaid-exec: command task started', data);
 
         var joiOptions = {
             convert: true,

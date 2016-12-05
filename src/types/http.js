@@ -5,7 +5,7 @@ var joi = require('joi');
 var dataSchema = {
     method: joi.string().required().valid(['GET']),
     url: joi.string().required(),
-    timeout: joi.number().min(1).default(3),
+    timeout: joi.number().min(1).required(),
     data: joi.object(),
     options: joi.object().keys({withRawResponseBody: joi.boolean().default(false)}).default({
         withRawResponseBody: false
@@ -28,7 +28,9 @@ module.exports = (logger, task) => {
 
         var rawData = task.data;
 
-        logger.trace(rawData);
+        rawData.timeout = task.timeout;
+
+        logger.trace('mazaid-exec: http task started', rawData);
 
         var joiOptions = {
             convert: true,
