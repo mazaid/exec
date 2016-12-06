@@ -1,6 +1,6 @@
 {
   "name": "mazaid-exec",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "mazaid execute task package",
   "main": "index.js",
   "files": [
