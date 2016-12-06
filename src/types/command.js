@@ -75,7 +75,7 @@ module.exports = (logger, task) => {
                 reject(mazaiError(`[mazai-exec] timeout exceed ${task.timeout}s`));
             }, task.timeout * 1000);
 
-            exec(cmd, {maxBuffer: 5 * 1024 * 1024}, (error, stdout, stderr) => {
+            exec(cmd, {maxBuffer: 10 * 1024 * 1024}, (error, stdout, stderr) => {
 
                 if (timeouted) {
                     return;
