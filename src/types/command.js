@@ -32,7 +32,7 @@ module.exports = (logger, task) => {
             allowUnknown: false
         };
 
-        joi.validate(task.data, dataSchema, joiOptions, function (error, valid) {
+        joi.validate(data, dataSchema, joiOptions, function (error, valid) {
             if (error) {
 
                 logger.trace(error);
